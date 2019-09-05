@@ -81,7 +81,8 @@
 
         if(sizeof($dodOsigIP) === 0)
         {
-            echo '<br />Unesite dodatne osiguranike!';
+            $ok = false;
+            echo '<br />Unesite dodatne osiguranike!';            
         }
 
     }
