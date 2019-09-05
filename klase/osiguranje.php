@@ -35,13 +35,13 @@
         private function PosaljiPDF()
         {            
             $mail = new PHPMailer;  //koristi se stabilna verzija PHPMailer-a 5.2!
-            /*
-                $mail->IsSMTP();
-                $mail->Host = "smtp.example.com";        
-                $mail->SMTPAuth = true;
-                $mail->Username = 'smtp_username';
-                $mail->Password = 'smtp_password';
-            */
+            
+            $mail->IsSMTP();
+            $mail->Host = "smtp.mailtrap.io";        
+            $mail->SMTPAuth = true;
+            $mail->Username = 'efe9d74cbd7dc6';
+            $mail->Password = 'c89f96f5de3543';
+            
                             
             $mail->setFrom = "ja@mojdomen.com";            
 
