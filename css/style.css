@@ -1,0 +1,11 @@
+nav, h1, h2, h3, h4, h6, h6, footer{
+    text-align: center;
+}
+form{
+    margin:0 auto;
+    width:40%;
+}
+form.prikaz{
+    margin:0 auto;
+    width:100%;
+}
