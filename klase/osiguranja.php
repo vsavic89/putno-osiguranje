@@ -37,8 +37,8 @@
                     echo '</form>';                    
                     
                     foreach($_POST as $key => $value){
-                        if(strstr($key, "btn_")){                                      
-                            $osiguranjaID = substr($key, 4);                                                                                 
+                        if(strstr($key, "btn_")){                                                                  
+                            $osiguranjaID = substr($key, 4);                                                                                                             
                             $osiguranje = new Osiguranje('','','','','','','','',[],[],[]);                        
                             $osiguranje->PrikaziOsiguranje($osiguranjaID);
                             break;

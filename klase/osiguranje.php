@@ -114,6 +114,15 @@
             $novaKonekcija = new Konekcija();
             $konekcija = $novaKonekcija->KonektujSe();
 
+            SrediPodatakZaBazu($konekcija, $this->imePrezime);
+            SrediPodatakZaBazu($konekcija, $this->datumRodjenja);
+            SrediPodatakZaBazu($konekcija, $this->brojPasosa);    
+            SrediPodatakZaBazu($konekcija, $this->telefon);
+            SrediPodatakZaBazu($konekcija, $this->email);
+            SrediPodatakZaBazu($konekcija, $this->datumPutovanjaOd);
+            SrediPodatakZaBazu($konekcija, $this->datumPutovanjaDo);
+            SrediPodatakZaBazu($konekcija, $this->vrstaPolise);        
+
             $sql = "insert into korisnici(ime_prezime,datum_rodjenja,broj_pasosa) 
                 values ('".$this->imePrezime."', '".$this->datumRodjenja."', '".$this->brojPasosa."')";                    
 
@@ -135,7 +144,7 @@
                         for($i=0;$i<sizeof($this->dodOsigIP);$i++)
                         {
                             $sql = "insert into korisnici(ime_prezime,datum_rodjenja,broj_pasosa) 
-                                values ('".$this->dodOsigIP[$i]."', '".$this->dodOsigDR[$i]."', '".$this->dodOsigBP[$i]."')";                    
+                                values ('".SrediPodatakZaBazu($konekcija, $this->dodOsigIP[$i])."', '".SrediPodatakZaBazu($konekcija, $this->dodOsigDR[$i])."', '".SrediPodatakZaBazu($konekcija, $this->dodOsigBP[$i])."')";                    
                             $konekcija->query($sql);
                             $korisniciId = $konekcija->insert_id;
 
@@ -159,7 +168,9 @@
             $novaKonekcija = new Konekcija();
             $konekcija = $novaKonekcija->KonektujSe();            
 
-            $sql = "select *, date(datum_putovanja_do) - date(datum_putovanja_od) as brojDana from osiguranja inner join korisnici on korisnici.id=osiguranja.korisnici_id inner join vrste_polisa on vrste_polisa.id = osiguranja.vrste_polisa_id where osiguranja.id = '$osiguranjaID'";
+            $sql = "select osiguranja.id, osiguranja.datum_upisa,korisnici.ime_prezime,korisnici.datum_rodjenja,korisnici.broj_pasosa,
+                osiguranja.telefon,osiguranja.email,osiguranja.datum_putovanja_od, osiguranja.datum_putovanja_do, vrste_polisa.naziv, 
+                date(datum_putovanja_do) - date(datum_putovanja_od) as brojDana from osiguranja inner join korisnici on korisnici.id=osiguranja.korisnici_id inner join vrste_polisa on vrste_polisa.id = osiguranja.vrste_polisa_id where osiguranja.id = '$osiguranjaID'";
 
             $result = $konekcija->query($sql);
 
@@ -169,10 +180,12 @@
                 echo '<div style="text-align:center;">';
                 while($row = $result->fetch_assoc())
                 {
+                    echo '<p>ID osiguranja: <strong>' . $row['id'].'</strong></p>';
                     echo '<p>Datum i vreme upisa: <strong>' . $row['datum_upisa'].'</strong></p>';
                     echo '<p>Ime i prezime: <strong>' . $row['ime_prezime'].'</strong></p>';
                     echo '<p>Datum rodjenja: <strong>' . $row['datum_rodjenja'].'</strong></p>';
                     echo '<p>Broj pasosa: <strong>' . $row['broj_pasosa'].'</strong></p>';
+                    echo '<p>Telefon: <strong>' . $row['telefon'].'</strong></p>';
                     echo '<p>E-mail: <strong>' . $row['email'].'</strong></p>';
                     echo '<p>Datum putovanja od: <strong>' . $row['datum_putovanja_od'].'</strong></p>';
                     echo '<p>Datum putovanja do: <strong>' . $row['datum_putovanja_do'].'</strong></p>';
